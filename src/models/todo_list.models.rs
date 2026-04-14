@@ -1,5 +1,6 @@
 use chrono::{DateTime, Utc};
-
+use sqlx::FromRow;
+#[derive(FromRow, Debug, Clone)]
 pub struct Todo {
     id: u8,
     title: String,
@@ -9,7 +10,9 @@ pub struct Todo {
     updatedAt:DateTime<Utc>,
 }
 
-enum Status{
+#[derive(FromRow, Debug, Clone, PartialEq, Eq, sqlx::Type)]
+#[sqlx(type_name = "Status")]
+pub enum Status{
     is_pending,
     is_done,
     not_started,
